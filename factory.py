@@ -1,5 +1,5 @@
 
-from typing import Callable
+from variable import DdExpression
 
 
 class XADDFactory:
@@ -9,7 +9,10 @@ class XADDFactory:
 
 class Node:
 
-    def __init__(self, val_func: Callable, low_node: 'Node'=None, high_node: 'Node'=None) -> None:
+    def __init__(self,
+                 val_func: DdExpression,
+                 low_node: 'Node'=None,
+                 high_node: 'Node'=None) -> None:
         self.val_func = val_func
         self.low_node = low_node
         self.high_node = high_node

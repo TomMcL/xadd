@@ -55,6 +55,7 @@ class TestDdExpression(TestCase):
         self.assertEqual(sum_expr.evaluate({'A': 1, 'B': 2, 'C': 3, 'D': 4}), -6)
         sum_expr = 4*var_a + 3*(var_b - var_c * (2 - var_d))
         self.assertEqual(sum_expr.evaluate({'A': 1, 'B': 2, 'C': 3, 'D': 4}), 28)
+        self.assertEqual(sum_expr.expression_repr, "((('A',))*(4))+(((('B',))-((('C',))*(((('D',))-(2))*(-1))))*(3))")
 
     def test_equalities(self):
         var_a = DdExpression('A')
