@@ -3,11 +3,14 @@ from typing import Union, Callable
 
 
 class DdExpression:
-    def __init__(self, dd_id: Union[tuple, str], expression_repr: str = None, expression_chain: Callable = None) -> None:
+    def __init__(self, dd_id: Union[tuple, str, float, int], expression_repr: str = None, expression_chain: Callable = None) -> None:
         self.dd_id = dd_id if isinstance(dd_id, tuple) else (dd_id,)
-        self.expression_repr  = expression_repr if expression_repr else self.dd_id
+        self.expression_repr = expression_repr if expression_repr is not None else self.dd_id[0]
         self.expression_chain = expression_chain if expression_chain else \
             lambda variable_values: variable_values.get(self.dd_id[0])
+
+    def __hash__(self):
+        return hash(self.expression_repr)
 
     def evaluate(self, variable_values: dict) -> Union[bool, float, int]:
         return self.expression_chain(variable_values)
@@ -67,3 +70,6 @@ class DdExpression:
 
     def __ge__(self, other: Union['DdExpression', float, int]) -> bool:
         return self._apply_op(other, operator.ge, op_symbol='>=')
+
+def and_(*args: DdExpression):
+    pass #TODO and fund
